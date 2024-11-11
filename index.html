@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=0.3, maxmum-scale=1.0, minimum-scale=0.3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BANANA FISH 倒數計時器</title>
     <style>
         body {
@@ -11,8 +11,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 2000px;  /* 設定網頁寬度 */
-            height: 3440px; /* 設定網頁高度 */
+            height: 100vh; /* 使用視口高度 */
             font-family: 'Press Start 2P', cursive; /* 像素風格字體 */
             color: black;
             text-align: center;
@@ -20,12 +19,12 @@
             margin: 0;
         }
         h1 {
-            font-size: 36px; /* 標題字體大小 */
+            font-size: 5vw; /* 使用視口寬度 */
             margin-bottom: 20px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
         }
         .countdown {
-            font-size: 32px; /* 倒數計時器字體大小 */
+            font-size: 10vw; /* 使用視口寬度 */
             line-height: 1.2;
             letter-spacing: 2px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
@@ -33,7 +32,7 @@
         }
         .purchase-links {
             margin-top: 30px;
-            font-size: 20px; /* 購買連結字體大小 */
+            font-size: 4vw; /* 使用視口寬度 */
             display: none; /* 初始隱藏 */
         }
         a {
@@ -90,4 +89,3 @@
     </script>
 </body>
 </html>
-
