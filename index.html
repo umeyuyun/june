@@ -12,20 +12,31 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            font-family: 'Courier New', monospace;
+            font-family: 'Press Start 2P', cursive; /* 像素風格字體 */
             color: black;
+            text-align: center;
+            padding: 20px; /* 增加內邊距以適應小屏幕 */
         }
         h1 {
-            font-size: 48px;
+            font-size: 36px; /* 調整字體大小以適應手機 */
             margin-bottom: 20px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-            font-family: 'Press Start 2P', cursive; /* 使用像素風格字體 */
         }
         .countdown {
-            font-size: 100px;
+            font-size: 80px; /* 調整字體大小以適應手機 */
             letter-spacing: 5px;
-            font-family: 'Press Start 2P', cursive; /* 使用像素風格字體 */
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+        }
+        .purchase-links {
+            margin-top: 30px;
+            font-size: 18px; /* 調整字體大小以適應手機 */
+            display: none; /* 初始隱藏 */
+        }
+        a {
+            color: blue;
+            text-decoration: underline;
+            display: block; /* 每個連結獨占一行 */
+            margin: 5px 0; /* 增加連結間距 */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- 引入像素風格字體 -->
@@ -33,12 +44,22 @@
 <body>
     <h1>BANANA FISH</h1>
     <div class="countdown" id="countdown">00:00:00</div>
-    <audio id="beep" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+    <audio id="bombSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+    <div class="purchase-links" id="purchaseLinks">
+        <p>全通路上架！</p>
+        <p>購買連結：</p>
+        <p><a href="https://www.spp.com.tw/SalePage/Index/10267366" target="_blank">SPP尖端官網</a></p>
+        <p><a href="https://www.eslite.com/product/10012116312682686733007" target="_blank">誠品</a></p>
+        <p><a href="https://www.books.com.tw/products/0011005090?srsltid=AfmBOop2IqOq_lt4dDIb1qkKT7L7LIuduNUZLrb-AYdsFthrCvZsQC5G" target="_blank">博客來</a></p>
+        <p><a href="https://www.kingstone.com.tw/basic/2019461355916/?lid=search&actid=WISE&kw=%E5%90%89%E7%94%B0%E7%A7%8B%E7%94%9F" target="_blank">金石堂</a></p>
+    </div>
 
     <script>
-        const endTime = new Date('2024-11-12T00:00:00').getTime(); // 修改倒數日期
+        const endTime = new Date('2024-11-11T23:59:00').getTime(); // 倒數日期
         const countdownElement = document.getElementById('countdown');
-        const beepSound = document.getElementById('beep');
+        const bombSound = document.getElementById('bombSound');
+        const purchaseLinks = document.getElementById('purchaseLinks');
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -52,10 +73,11 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                countdownElement.innerHTML = "時間到！";
-                beepSound.play();
-            } else if (seconds % 60 === 0) {
-                beepSound.play();
+                countdownElement.innerHTML = "全通路上架！";
+                purchaseLinks.style.display = "block"; // 顯示購買連結
+                bombSound.play(); // 播放聲音
+            } else if (seconds % 10 === 0) {
+                bombSound.play(); // 每10秒播放一次聲音
             }
         }
 
