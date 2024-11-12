@@ -6,7 +6,7 @@
     <title>BANANA FISH 倒數計時器</title>
     <style>
         body {
-            background-color: yellow;
+            background-color: yellow; /* 背景顏色 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -15,25 +15,24 @@
             font-family: 'Press Start 2P', cursive; /* 像素風格字體 */
             color: black;
             text-align: center;
-            padding: 20px;
             margin: 0;
+            padding: 20px;
         }
         h1 {
-            font-size: 5vw; /* 使用視口寬度 */
+            font-size: 5vw; /* 標題字體大小 */
             margin-bottom: 20px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
         }
         .countdown {
-            font-size: 10vw; /* 使用視口寬度 */
+            font-size: 10vw; /* 倒數計時器字體大小 */
             line-height: 1.2;
             letter-spacing: 2px;
             text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
             margin: 20px 0;
         }
         .purchase-links {
+            font-size: 4vw; /* 購買連結字體大小 */
             margin-top: 30px;
-            font-size: 4vw; /* 使用視口寬度 */
-            display: none; /* 初始隱藏 */
         }
         a {
             color: blue;
@@ -49,8 +48,7 @@
     <div class="countdown" id="countdown">00:00:00</div>
     <audio id="bombSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
 
-    <div class="purchase-links" id="purchaseLinks">
-        <p>全通路上架！</p>
+    <div class="purchase-links">
         <p>購買連結：</p>
         <p><a href="https://www.spp.com.tw/SalePage/Index/10267366" target="_blank">SPP尖端官網</a></p>
         <p><a href="https://www.eslite.com/product/10012116312682686733007" target="_blank">誠品</a></p>
@@ -59,10 +57,9 @@
     </div>
 
     <script>
-        const endTime = new Date('2024-11-11T23:59:00').getTime(); // 倒數日期
+        const endTime = new Date('2024-11-12T00:00:00').getTime(); // 倒數日期
         const countdownElement = document.getElementById('countdown');
         const bombSound = document.getElementById('bombSound');
-        const purchaseLinks = document.getElementById('purchaseLinks');
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -76,8 +73,7 @@
 
             if (distance < 0) {
                 clearInterval(timer);
-                countdownElement.innerHTML = "全通路上架！";
-                purchaseLinks.style.display = "block"; // 顯示購買連結
+                countdownElement.innerHTML = "時間到！"; // 倒數結束時的顯示
                 bombSound.play(); // 播放聲音
             } else if (seconds % 10 === 0) {
                 bombSound.play(); // 每10秒播放一次聲音
