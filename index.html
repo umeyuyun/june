@@ -3,85 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BANANA FISH 倒數計時器</title>
+    <title>Banana Fish Countdown</title>
     <style>
         body {
-            background-color: yellow; /* 背景顏色 */
+            background-color: yellow;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* 使用視口高度 */
-            font-family: 'Press Start 2P', cursive; /* 像素風格字體 */
-            color: black;
-            text-align: center;
+            height: 100vh;
             margin: 0;
-            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
         }
         h1 {
-            font-size: 5vw; /* 標題字體大小 */
+            font-size: 48px;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
         }
-        .countdown {
-            font-size: 10vw; /* 倒數計時器字體大小 */
-            line-height: 1.2;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
-            margin: 20px 0;
-        }
-        .purchase-links {
-            font-size: 4vw; /* 購買連結字體大小 */
-            margin-top: 30px;
+        #clock {
+            font-size: 64px;
+            margin-bottom: 20px;
         }
         a {
-            color: blue;
-            text-decoration: underline;
-            display: block; /* 每個連結獨占一行 */
-            margin: 5px 0; /* 增加連結間距 */
+            display: block;
+            margin: 5px 0;
+            font-size: 20px;
+            text-decoration: none;
+            color: black;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- 引入像素風格字體 -->
 </head>
 <body>
     <h1>BANANA FISH</h1>
-    <div class="countdown" id="countdown">00:00:00</div>
-    <audio id="bombSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
-
-    <div class="purchase-links">
-        <p>購買連結：</p>
-        <p><a href="https://www.spp.com.tw/SalePage/Index/10267366" target="_blank">SPP尖端官網</a></p>
-        <p><a href="https://www.eslite.com/product/10012116312682686733007" target="_blank">誠品</a></p>
-        <p><a href="https://www.books.com.tw/products/0011005090?srsltid=AfmBOop2IqOq_lt4dDIb1qkKT7L7LIuduNUZLrb-AYdsFthrCvZsQC5G" target="_blank">博客來</a></p>
-        <p><a href="https://www.kingstone.com.tw/basic/2019461355916/?lid=search&actid=WISE&kw=%E5%90%89%E7%94%B0%E7%A7%8B%E7%94%9F" target="_blank">金石堂</a></p>
+    <div id="clock">2024/11/12 00:00</div>
+    <div>
+        <span>購買連結：</span>
+        <a href="https://www.spp.com.tw/SalePage/Index/10267366" target="_blank">SPP尖端官網</a>
+        <a href="https://www.eslite.com/product/10012116312682686733007" target="_blank">誠品</a>
+        <a href="https://www.books.com.tw/products/0011005090?srsltid=AfmBOop2IqOq_lt4dDIb1qkKT7L7LIuduNUZLrb-AYdsFthrCvZsQC5G" target="_blank">博客來</a>
+        <a href="https://www.kingstone.com.tw/basic/2019461355916/?lid=search&actid=WISE&kw=%E5%90%89%E7%94%B0%E7%A7%8B%E7%94%9F" target="_blank">金石堂</a>
     </div>
 
+    <audio id="countdownSound" src="countdown.mp3"></audio>
+    
     <script>
-        const endTime = new Date('2024-11-12T00:00:00').getTime(); // 倒數日期
-        const countdownElement = document.getElementById('countdown');
-        const bombSound = document.getElementById('bombSound');
+        let countdownSound = document.getElementById('countdownSound');
+        let countdownDate = new Date("2024-11-12T00:00:00").getTime();
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = endTime - now;
-
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdownElement.innerHTML = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        function updateClock() {
+            let now = new Date().getTime();
+            let distance = countdownDate - now;
 
             if (distance < 0) {
                 clearInterval(timer);
-                countdownElement.innerHTML = "時間到！"; // 倒數結束時的顯示
-                bombSound.play(); // 播放聲音
-            } else if (seconds % 10 === 0) {
-                bombSound.play(); // 每10秒播放一次聲音
+                document.getElementById('clock').innerHTML = "倒數結束";
+                return;
+            }
+
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('clock').innerHTML = hours + "小時 " + minutes + "分鐘 " + seconds + "秒 ";
+
+            if (distance < 60000) { // 1 minute
+                countdownSound.play();
             }
         }
 
-        const timer = setInterval(updateCountdown, 1000);
-        updateCountdown();
+        let timer = setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
